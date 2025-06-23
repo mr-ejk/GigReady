@@ -1,10 +1,10 @@
-﻿Imports System.Data.OleDb
+Imports System.Data.OleDb
 
 Public Class Login
 
     Dim con As New OleDbConnection
     Dim dbprovider As String = "Provider=Microsoft.ACE.OLEDB.12.0;"
-    Dim dbsource As String = "Data Source=D:\Download\integDatabase.accdb"
+    Dim dbsource As String = "Data Source=D:\Download\IntegDB.accdb"
     Private Sub LinkLabel1_LinkClicked_1(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Create.Show()
         Me.Hide()
@@ -55,9 +55,9 @@ Public Class Login
         Else
             Try
                 con.Open()
-                Using cmd As New OleDbCommand("SELECT * FROM [User] WHERE [Username] =@Username AND [Password] =@Password", con)
-                    cmd.Parameters.AddWithValue("@Username", OleDbType.VarChar).Value = usrnm.Text.Trim
-                    cmd.Parameters.AddWithValue("@Password", OleDbType.VarChar).Value = passwrd.Text.Trim
+                Using cmd As New OleDbCommand("SELECT * FROM [User_Table] WHERE [Username] = ? AND [Password] = ?", con)
+                    cmd.Parameters.AddWithValue("@Username", usrnm.Text.Trim)
+                    cmd.Parameters.AddWithValue("@Password", passwrd.Text.Trim)
 
                     Dim ds As New OleDbDataAdapter(cmd)
                     Dim myTable As New DataTable
@@ -81,8 +81,12 @@ Public Class Login
                         End If
                     Else
                         MessageBox.Show("Wrong password or Username", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        passwrd.UseSystemPasswordChar = False
                         usrnm.Text = "Username"
                         passwrd.Text = "Password"
+                        usrnm.ForeColor = Color.DarkGray
+                        passwrd.ForeColor = Color.DarkGray
+
                     End If
                 End Using
             Catch ex As Exception
