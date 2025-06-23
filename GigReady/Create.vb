@@ -1,10 +1,10 @@
-﻿Imports System.Data.OleDb
+Imports System.Data.OleDb
 
 Public Class Create
 
     Dim con As New OleDbConnection
     Dim dbprovider As String = "Provider=Microsoft.ACE.OLEDB.12.0;"
-    Dim dbsource As String = "Data Source=D:\Download\integDatabase.accdb"
+    Dim dbsource As String = "Data Source=D:\Download\IntegDB.accdb"
 
     Private Sub LinkLabel1_LinkClicked_1(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Login.Show()
@@ -107,7 +107,7 @@ Public Class Create
             Else
                 Try
                     con.Open()
-                    Dim cmd As New OleDb.OleDbCommand("INSERT INTO [User] ([Username], [Password], [Role]) VALUES (?, ?, ?)", con)
+                    Dim cmd As New OleDb.OleDbCommand("INSERT INTO [User_Table] ([Username], [Password], [Role]) VALUES (?, ?, ?)", con)
                     cmd.Parameters.AddWithValue("@Username", usrnm.Text.Trim)
                     cmd.Parameters.AddWithValue("@Password", passwrd.Text.Trim)
                     cmd.Parameters.AddWithValue("@Role", role.SelectedItem.ToString())
